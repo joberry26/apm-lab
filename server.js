@@ -45,7 +45,7 @@ app.post('/api/student',(req,res)=>{
         rollbar.error('No name given')
         res.status(400).send('must provide a name.')
 
-    } else if (!isNaN) {
+    } else if (!isNaN(name)) {
         rollbar.warning('Number entered instead of integer')
         res.status(400).send(err)
 
