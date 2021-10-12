@@ -36,6 +36,11 @@ app.post('/api/student',(req,res)=>{
     name = name.trim();
     const index = students.findIndex(studentName=> studentName === name)
 
+    
+    if (!isNaN(name)) {
+        rollbar.warning('Number entered instead of integer')
+        res.status(400).send(err)
+    }
     if(index === -1 && name !== ''){
         students.push(name)
         rollbar.log('Student added successfully', {author: 'LAAQ', type: 'manual entry'})
@@ -44,10 +49,6 @@ app.post('/api/student',(req,res)=>{
     } else if (name === ''){
         rollbar.error('No name given')
         res.status(400).send('must provide a name.')
-
-    } else if (!isNaN(name)) {
-        rollbar.warning('Number entered instead of integer')
-        res.status(400).send(err)
 
     } else {
         rollbar.error('student already exists')
